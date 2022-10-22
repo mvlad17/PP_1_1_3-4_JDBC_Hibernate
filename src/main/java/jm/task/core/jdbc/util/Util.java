@@ -1,32 +1,19 @@
 package jm.task.core.jdbc.util;
 
 import java.sql.*;
+import java.util.ResourceBundle;
 
 public class Util {
-    // реализуйте настройку соеденения с БД
-
-    private final static String DB_DRIVER = "com.mysql.cj.jdbc.Driver";
-    private final static String DB_URL = "jdbc:mysql://localhost/Test";
-    private final static String DB_USERNAME = "root";
-    private final static String DB_PASSWORD = "rootroot";
 
     public static Connection getConnection() throws SQLException {
 
-        Connection connection = null;
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("database");
+        String dbUrl = resourceBundle.getString("dbUrl");
+        String dbName = resourceBundle.getString("dbName");
+        String dbPassword = resourceBundle.getString("dbPassword");
 
-        try {
-            Class.forName(DB_DRIVER);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        return DriverManager.getConnection(dbUrl, dbName, dbPassword);
 
-        try {
-            connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return connection;
     }
 
 }
